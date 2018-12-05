@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getStandings } from './races-api'
+import { getStandings, getRaces } from './races-api'
 
 class RacesContainer extends Component {
   constructor (props) {
@@ -13,7 +13,8 @@ class RacesContainer extends Component {
 
   async componentWillMount () {
     const standings = await getStandings()
-    this.setState(() => ({ standings }))
+    const races = await getRaces(this.state.year)
+    this.setState(() => ({ standings, races }))
   }
 
   render () {
