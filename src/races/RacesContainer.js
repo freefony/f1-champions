@@ -17,6 +17,14 @@ class RacesContainer extends Component {
     this.setState(() => ({ standings, races }))
   }
 
+  async componentDidUpdate (nextProp) {
+    const year = nextProp.match.params.year
+    if (year !== this.state.year) {
+      const races = await getRaces(year)
+      this.setState(() => ({ races, year }))
+    }
+  }
+
   render () {
     return <p>JS</p>
   }
