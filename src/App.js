@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import YearList from './YearList'
+import Routes from './Routes.js'
 import './App.css'
 
 class App extends Component {
   render () {
     return (
-      <YearList />
+      <Routes />
     )
   }
 }
