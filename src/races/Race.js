@@ -20,11 +20,10 @@ export default ({
   return <div className={wrapperClass.join(' ')}>
     <div className='f1-race-card-race-name'>{raceName}</div>
     <div>
-      <span>{season}</span>
-      <span>Round {round}</span>
+      {season} Round {round}
     </div>
     <div className=''>{circuitName}</div>
-    <div className='f1-race-card-driver-section'>
+    <div className='f1-race-card-driver-section row'>
       <div>Winner: {driver}</div>
       <div>{constructor}</div>
     </div>
