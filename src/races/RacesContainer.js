@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { getStandings, getRaces } from './races-api'
+import Race from './Race'
 
 class RacesContainer extends Component {
   constructor (props) {
@@ -26,7 +27,9 @@ class RacesContainer extends Component {
   }
 
   render () {
-    return <p>JS</p>
+    const { races } = this.state
+    const view = races.map((race,i) => <Race {...race} key={i} />)
+    return view
   }
 }
 
