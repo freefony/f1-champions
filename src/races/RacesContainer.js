@@ -12,6 +12,11 @@ class RacesContainer extends Component {
     }
   }
 
+  isWorldChampion = (driverId, season) => {
+    const seasonChampion = this.state.standings.find(standing => (standing.season === season))
+    return seasonChampion.driverId === driverId
+  }
+
   async componentWillMount () {
     const standings = await getStandings()
     const races = await getRaces(this.state.year)
@@ -27,8 +32,11 @@ class RacesContainer extends Component {
   }
 
   render () {
-    const { races } = this.state
-    const view = races.map((race,i) => <Race {...race} key={i} />)
+    const { races, standings } = this.state
+    const view = races.map((race,i) => {
+      const isWorldChampion = standings.length ? this.isWorldChampion(race.driverId, race.season) : false
+      return <Race {...race} key={i} isWorldChampion={isWorldChampion} />
+    })
     return view
   }
 }

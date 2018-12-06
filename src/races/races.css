@@ -5,6 +5,11 @@
   background: #fff;
   color: #666
 }
+
+.f1-race-card-wrapper.is-world-champion {
+  border-right: 5px solid gold;
+}
+
 .f1-race-card-wrapper > div {
   margin-bottom: 5px
 }
