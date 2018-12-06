@@ -12,29 +12,35 @@ class RacesContainer extends Component {
     }
   }
 
-  isWorldChampion = (driverId, season) => {
-    const seasonChampion = this.state.standings.find(standing => (standing.season === season))
-    return seasonChampion.driverId === driverId
+  getWorldChampion = (season, standings = []) => {
+    const standingsHay = standings.length ? standings : this.state.standings
+    const seasonChampion = standingsHay.find(standing => (standing.season === season))
+    return seasonChampion
   }
 
   async componentWillMount () {
+    const { year } = this.state
     const standings = await getStandings()
-    const races = await getRaces(this.state.year)
-    this.setState(() => ({ standings, races }))
+    const races = await getRaces(year)
+    const worldChampion = this.getWorldChampion(year, standings)
+
+    this.setState(() => ({ standings, races, worldChampion }))
   }
 
   async componentDidUpdate (nextProp) {
     const year = nextProp.match.params.year
     if (year !== this.state.year) {
       const races = await getRaces(year)
-      this.setState(() => ({ races, year }))
+      const worldChampion = this.getWorldChampion(year, this.state.standings)
+
+      this.setState(() => ({ races, year, worldChampion }))
     }
   }
 
   render () {
-    const { races, standings } = this.state
+    const { races, worldChampion } = this.state
     const view = races.map((race,i) => {
-      const isWorldChampion = standings.length ? this.isWorldChampion(race.driverId, race.season) : false
+      const isWorldChampion = (worldChampion.driverId === race.driverId)
       return <Race {...race} key={i} isWorldChampion={isWorldChampion} />
     })
     return view
